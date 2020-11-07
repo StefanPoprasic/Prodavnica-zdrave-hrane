@@ -1,0 +1,106 @@
+﻿@model IEnumerable<WebApplication15.Models.ProdavnicaProizvodi>
+
+@{
+    /**/
+
+    ViewBag.Title = "Proizvodi";
+
+    if (Session["Ime"] == null)
+    {
+        <p>Ulogujte se!</p>
+        Response.Redirect("~/Korisnik/Login");
+    }
+}
+<style>
+    body {
+        background-image: url("/Slike/3.jpg");
+    }
+
+    .odjava {
+        border: 4px solid black;
+        background-color: white;
+        width: 80px;
+        float: right;
+        color: black;
+      
+    }
+</style>
+<body>
+<div class="odjava" >
+    <a href="/Korisnik/logOut"><font color="black">Odjavi se</font></a>
+</div>
+<div class="jumbotron">
+<h3>Korisnik: @Session["Ime"].ToString()</h3>
+<h3>Racun: @Session["Racun"].ToString()</h3>
+    </div>
+
+<div class="jumbotron">
+    <h2>Nasi proizvodi</h2>
+    @using (Html.BeginForm("Index", "Proizvod", FormMethod.Get))
+    {
+
+        @Html.TextBox("searching")<input type="submit" value="Trazi proizvod" />
+    }
+    <br />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Proizvodjac)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vrsta)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cena)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td colspan="3" style="color:red">
+                        Nema trazenog proizvoda
+                    </td>
+                </tr>
+            }
+            else
+            {
+
+
+
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Proizvodjac)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Vrsta)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cena)
+                        </td>
+                        <td>
+
+                            @Html.ActionLink("Kupi", "Kupi", "Korpa", new { id = item.ProizvodID }, null)
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    
+        @Html.ActionLink("Posalji poruku", "PorukaAdminu")
+    
+</div>
+    </body>

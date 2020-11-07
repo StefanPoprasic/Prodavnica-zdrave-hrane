@@ -1,0 +1,114 @@
+﻿@model IEnumerable<WebApplication15.Models.Korisnik>
+
+@{
+    /**/
+
+    /**/
+
+    ViewBag.Title = "Proizvodi";
+
+    if (Session["Ime"] == null)
+    {
+        <p>Ulogujte se!</p>
+        Response.Redirect("~/Korisnik/Login");
+    }
+}
+        <style>
+            body {
+                background-color: greenyellow;
+            }
+
+            .odjava {
+                border: 4px solid black;
+                background-color: white;
+                width: 80px;
+                float: right;
+                color: black;
+            }
+        </style>
+        <body>
+            <div class="odjava">
+                <a href="/Korisnik/logOut"><font color="black">Odjavi se</font></a>
+            </div>
+            <div class="jumbotron">
+                
+
+                <h2>Registrovani korisnici</h2>
+                @using (Html.BeginForm("Korisnici", "Korisnik", FormMethod.Get))
+                {
+
+                    @Html.TextBox("searching")<input type="submit" value="Nadji korisnika" />
+                }
+                <br />
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.KorisnikID)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Ime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Prezime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Gmail)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Racun)
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Count() == 0)
+                        {
+                            <tr>
+                                <td colspan="3" style="color:red">
+                                    Nema trazenog proizvoda
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+
+
+
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.KorisnikID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Ime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Prezime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Gmail)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Racun)
+                                    </td>
+                                    <td>
+                                        @{
+                                            var total = 0;
+                                        }
+                                        @Html.ActionLink("Storniraj racun", "Edit1", "Korisnik", new { id = item.KorisnikID, racun = total }, null)
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <div>
+                    @Html.ActionLink("Vratite se ", "AdminProdavnica", "Proizvod")
+                </div>
+            </div>
+        </body>
+

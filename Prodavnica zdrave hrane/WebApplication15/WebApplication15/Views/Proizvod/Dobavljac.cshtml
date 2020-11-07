@@ -1,0 +1,35 @@
+﻿@model IEnumerable<WebApplication15.Models.ProdavnicaProizvodi>
+@using (Html.BeginForm("Dobavljac", "Proizvod", FormMethod.Post))
+{
+    <style>
+        body {
+            background-color: greenyellow;
+        }
+
+        .odjava {
+            border: 4px solid black;
+            background-color: white;
+            width: 80px;
+            float: right;
+            color: black;
+        }
+    </style>
+    <body>
+        <div class="odjava">
+            <a href="/Korisnik/logOut"><font color="black">Odjavi se</font></a>
+        </div>
+        <div class="jumbotron">
+
+            <textarea rows="4" cols="50" name="text" id="txtText">
+</textarea>
+            <div>
+            <input type="submit" value="Salji dobavljacu" />
+                </div><br />
+            <div>
+                @Html.ActionLink("Vrati se ", "AdminProdavnica")
+            </div>
+        </div>
+    </body>
+
+}
+

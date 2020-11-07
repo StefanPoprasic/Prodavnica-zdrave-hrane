@@ -1,0 +1,84 @@
+﻿@model WebApplication15.Models.MagacinProizvodi
+
+@{
+    ViewBag.Title = "DeleteMagacin";
+}
+<style>
+    body {
+        background-color: greenyellow;
+    }
+
+    .odjava {
+        border: 4px solid black;
+        background-color: white;
+        width: 80px;
+        float: right;
+        color: black;
+    }
+</style>
+<body>
+    <div class="odjava">
+        <a href="/Korisnik/logOut"><font color="black">Odjavi se</font></a>
+    </div>
+    <div class="jumbotron">
+        <h2>Da li ste sigurni da zelite da obisete proizvod</h2>
+
+
+        <div>
+
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.ProizvodID)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ProizvodID)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Ime)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Ime)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Proizvodjac)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Proizvodjac)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Vrsta)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Vrsta)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Cena)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Cena)
+                </dd>
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Obrisi proizvod" class="btn btn-default" /> |
+                    @Html.ActionLink("Back to List", "AdminMagacin")
+                </div>
+            }
+        </div>
+    </div>
+</body>

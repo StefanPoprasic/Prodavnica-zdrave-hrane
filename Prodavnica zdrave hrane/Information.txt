@@ -1,0 +1,1 @@
+ASP.NET MVC technology in visual studio 2017 , database in sql managment studio 2017

@@ -1,0 +1,109 @@
+﻿@model IEnumerable<WebApplication15.Models.MagacinProizvodi>
+
+@{
+                /**/
+
+                /**/
+
+                ViewBag.Title = "Proizvodi";
+
+                if (Session["Ime"] == null)
+                {
+                    <p>Ulogujte se!</p>
+                    Response.Redirect("~/Korisnik/Login");
+                }
+}
+<h3 hidden="hidden">Korisnik: @Session["Ime"].ToString()</h3>
+<h3 hidden="hidden">Racun: @Session["Racun"].ToString()</h3>
+<style>
+    body {
+        background-color: greenyellow;
+    }
+
+    .odjava {
+        border: 4px solid black;
+        background-color: white;
+        width: 80px;
+        float: right;
+        color: black;
+    }
+</style>
+<body>
+    <div class="odjava">
+        <a href="/Korisnik/logOut"><font color="black">Odjavi se</font></a>
+    </div>
+    <div class="jumbotron">
+
+        <h2>Proizvodi u magacinu</h2>
+        @using (Html.BeginForm("AdminMagacin", "Proizvod", FormMethod.Get))
+        {
+
+            @Html.TextBox("searching")<input type="submit" value="Trazi proizvod" />
+        }
+        <br />
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Ime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Proizvodjac)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Vrsta)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cena)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="3" style="color:red">
+                            Nema trazenog proizvoda
+                        </td>
+                    </tr>
+                }
+                else
+                {
+
+
+
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Ime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Proizvodjac)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Vrsta)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cena)
+                            </td>
+                            <td>
+
+                                @Html.ActionLink("Izmeni", "EditMagacin", new { id = item.ProizvodID }) |
+
+                                @Html.ActionLink("Prebaci u prodavnicu", "Prebaci", new { id = item.ProizvodID }) |
+
+                                @Html.ActionLink("Obrisi", "DeleteMagacin", new { id = item.ProizvodID }, null)
+
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        @Html.ActionLink("Dodaj novi", "CreateMagacin", new { }) |
+        @Html.ActionLink("Vrati se ", "AdminProdavnica")
+    </div>
+</body>

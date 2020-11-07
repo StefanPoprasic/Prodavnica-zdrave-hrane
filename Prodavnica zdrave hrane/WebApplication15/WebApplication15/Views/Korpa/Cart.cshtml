@@ -1,0 +1,93 @@
+﻿@model WebApplication15.Models.Korisnik
+@{
+    ViewBag.Title = "Cart";
+}
+@using WebApplication15.Controllers;
+
+
+<style>
+    body {
+        background-image: url("/Slike/4.jpg");
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .odjava {
+        border: 4px solid black;
+        background-color: white;
+        width: 80px;
+        float: right;
+        color: black;
+    }
+</style>
+<body>
+<div class="odjava">
+    <a href="/Korisnik/LogOut"><font color="black">Odjava</font></a>
+</div>
+<div class="jumbotron">
+    <h2>Korpa</h2>
+    <h3 hidden="hidden">Korisnik: @Session["Ime"].ToString()</h3>
+    <h3 hidden="hidden">Racun: @Session["Racun"].ToString()</h3>
+    <h3 hidden="hidden">ID: @Session["korisnikID"].ToString()</h3>
+    <table>
+
+        <tr>
+            <th>Ime</th>
+            <th>Kolicina</th>
+            <th>Vrsta</th>
+            <th>Cena</th>
+            <th>Cena*Kolicina</th>
+            <th>Opciono</th>
+        </tr>
+
+
+        @foreach (Item item in (List<Item>)Session["korpa"])
+        {
+
+            <tr>
+
+                <td hidden="hidden">@item.Proizvodi.ProizvodID</td>
+                <td>@item.Proizvodi.Ime</td>
+                <td>@item.Kolicina</td>
+                <td>@item.Proizvodi.Vrsta</td>
+                <td>@item.Proizvodi.Cena</td>
+                <td>@(item.Kolicina * item.Proizvodi.Cena)</td>
+                <td>@Html.ActionLink("Izbaci", "Izbaci", "Korpa", new { id = item.Proizvodi.ProizvodID }, null)</td>
+
+            </tr>
+        }
+        @{
+            var total = Convert.ToInt32(Session["Racun"].ToString());
+            List<Item> cart = (List<Item>)Session["korpa"];
+            total += cart.Sum(item => item.Proizvodi.Cena * item.Kolicina);
+        }
+
+
+        <tr>
+            <td>Ukupna cena : @total</td>
+        </tr>
+        <tr>
+            <td>@Html.ActionLink("Potvrdite porudzbinu", "Edit", "Korisnik", new { id = @Session["KorisnikID"].ToString(), racun = total }, null)</td>
+            <td>@Html.ActionLink("<-Nastavi sa kupovinom", "Index", "Proizvod")</td>
+        </tr>
+    </table>
+</div>
+
+<br />
+    </body>
